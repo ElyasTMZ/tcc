@@ -1,0 +1,90 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #aaa;
+    font-family: 'Raleway', sans-serif;
+}
+
+/* Ajusta o padding superior para evitar sobreposição com o cabeçalho fixo */
+body {
+    padding-top: 120px; /* Ajuste conforme a altura do cabeçalho */
+}
+
+/* Estilo da container */
+.container {
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(120, 120, 120, 0.3);
+    /* Adiciona um padding inferior para garantir que o conteúdo não sobreponha o rodapé */
+    padding-bottom: 150px; /* Deve ser igual à altura do rodapé */
+}
+
+/* Estilo do título */
+h1 {
+    text-align: center;
+    color: #ff0066;
+}
+
+/* Estilo da tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #006CB5;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+/* Estilo dos formulários */
+form {
+    text-align: center;
+}
+
+/* Estilo dos botões */
+button {
+    color: #fff;
+    border: none;
+    font-size: 1em;
+    padding: 10px 20px;
+    background-color: #006CB5;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #004a80;
+}
+
+/* Estilo dos links */
+a {
+    color: #006CB5;
+    text-decoration: none;
+    display: inline-block; /* Ajuste para não ocupar toda a largura */
+    text-align: center;
+    margin-top: 20px;
+}
+
+a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,45 @@
+/* Reseta margin e padding para todos os elementos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Define o corpo e o HTML para ocupar toda a altura */
+body, html {
+    height: 100%;
+}
+
+/* Define o estilo do footer */
+footer {
+    width: 100%;
+    height: 150px;
+    background-color: #333; /* Cor de fundo do rodapé */
+    color: white; /* Cor do texto */
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0; /* Garante que o footer está encostado no lado esquerdo */
+    padding: 20px 0; /* Padding interno */
+}
+
+/* Estilo dos links no rodapé */
+footer a {
+    color: white; /* Cor dos links */
+    text-decoration: none;
+    margin: 0 10px; /* Espaçamento entre os links */
+}
+
+footer a:hover {
+    text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+}
+
+/* Estilo dos parágrafos no rodapé */
+footer p {
+    margin: 10px 0; /* Espaçamento entre os parágrafos */
+}
+
+/* Ajusta o conteúdo principal para não sobrepor o footer */
+main {
+    padding-bottom: 150px; /* Deve ser igual à altura do footer */
+}
