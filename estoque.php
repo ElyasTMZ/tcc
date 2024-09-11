@@ -51,25 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escolhas Cantina</title>
-    <link rel="stylesheet" href="_CSS/estoque.css">
+    <link rel="stylesheet" href="_css/estoque.css">
 </head>
 <body class="estoque-page">
-
-    <header>
-        <div class="logo">
-            <img id="logo" alt="freeCodeCamp" src="logo etecia.png">
-        </div>
-        <div class="menu">
-            <nav class="links">
-                <ul>
-                    <li><a href="#Link-Cardapio">Cardápio</a></li>
-                    <li><a href="#Link-Pedidos">Pedidos</a></li>
-                    <li><a href="#Link-Carrinho">Carrinho</a></li>
-                    <li><a href="#Link-MeuPerfil">Meu Perfil</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
     <div class="content">
         <h1>Escolhas Cantina</h1>
@@ -161,5 +145,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 </body>
 </html>
-
 <?php include 'footer.php'; ?>
