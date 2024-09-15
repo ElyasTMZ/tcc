@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'php_action/db.php';
+include 'db.php';
 include 'header.php';
 // Verifique se a ação é a finalização da compra
 if ($_POST['action'] === 'checkout') {

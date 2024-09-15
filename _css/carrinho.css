@@ -27,7 +27,7 @@ body {
 /* Estilo do título */
 h1 {
     text-align: center;
-    color: #ff0066;
+    color: #c10a52;
 }
 
 /* Estilo da tabela */
@@ -44,7 +44,7 @@ th, td {
 }
 
 th {
-    background-color: #006CB5;
+    background-color: #c10a52;
     color: white;
 }
 
@@ -67,18 +67,18 @@ button {
     border: none;
     font-size: 1em;
     padding: 10px 20px;
-    background-color: #006CB5;
+    background-color: #c10a52;
     cursor: pointer;
     border-radius: 5px;
 }
 
 button:hover {
-    background-color: #004a80;
+    background-color: #a10a47; /* Variação mais escura da cor principal para o efeito hover */
 }
 
 /* Estilo dos links */
 a {
-    color: #006CB5;
+    color: #c10a52;
     text-decoration: none;
     display: inline-block; /* Ajuste para não ocupar toda a largura */
     text-align: center;

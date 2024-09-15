@@ -1,44 +1,24 @@
 <?php
-include 'db.php';
-include 'header.php';
+include 'php_action/db.php'; // Inclui a conexão com o banco de dados
+include 'header.php'; // Inclui o cabeçalho
+include 'php_action/inserir.php'; // Inclui a função de inserir produto
 
+// Chama a função de inserir produto se for uma requisição POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Verifica se todos os campos necessários foram preenchidos
-    if (isset($_POST['name']) && isset($_POST['description']) && isset($_POST['price']) && isset($_POST['fornecedor'])) {
-        $nome = $_POST['name'];
+    if (isset($_POST['name']) && isset($_POST['description']) && isset($_POST['price'])) {
+        // Captura os dados do formulário
         $descricao = $_POST['description'];
-        $preco = $_POST['price'];
+        $valor = $_POST['price'];
         $quantidade = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1;
-        $codForn = intval($_POST['fornecedor']);
         $validade = $_POST['validade'];
 
         // Obtém a data e hora atuais
         $dataEntrada = date('Y-m-d');
         $horaEntrada = date('H:i:s');
 
-        try {
-            // Código SQL para inserir os dados na tabela tbProdutos
-            $sql = "INSERT INTO tbProdutos (descricao, quantidade, valor, validade, dataEntrada, horaEntrada, codForn) 
-                    VALUES (:descricao, :quantidade, :valor, :validade, :dataEntrada, :horaEntrada, :codForn)";
-
-            // Preparar a declaração
-            $stmt = $pdo->prepare($sql);
-
-            // Bind dos parâmetros
-            $stmt->bindParam(':descricao', $descricao);
-            $stmt->bindParam(':quantidade', $quantidade, PDO::PARAM_INT);
-            $stmt->bindParam(':valor', $preco);
-            $stmt->bindParam(':validade', $validade);
-            $stmt->bindParam(':dataEntrada', $dataEntrada);
-            $stmt->bindParam(':horaEntrada', $horaEntrada);
-            $stmt->bindParam(':codForn', $codForn, PDO::PARAM_INT);
-
-            // Executar a declaração
-            $stmt->execute();
-            echo "Produto adicionado com sucesso!";
-        } catch (PDOException $e) {
-            echo "Erro: " . $e->getMessage();
-        }
+        // Chama a função para inserir o produto
+        inserirProduto($descricao, $quantidade, $valor, $validade, $dataEntrada, $horaEntrada);
     } else {
         echo "Por favor, preencha todos os campos.";
     }
@@ -51,25 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escolhas Cantina</title>
-    <link rel="stylesheet" href="_CSS/estoque.css">
+    <link rel="stylesheet" href="_css/estoque.css">
 </head>
 <body class="estoque-page">
-
-    <header>
-        <div class="logo">
-            <img id="logo" alt="freeCodeCamp" src="logo etecia.png">
-        </div>
-        <div class="menu">
-            <nav class="links">
-                <ul>
-                    <li><a href="#Link-Cardapio">Cardápio</a></li>
-                    <li><a href="#Link-Pedidos">Pedidos</a></li>
-                    <li><a href="#Link-Carrinho">Carrinho</a></li>
-                    <li><a href="#Link-MeuPerfil">Meu Perfil</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
     <div class="content">
         <h1>Escolhas Cantina</h1>
@@ -85,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="popup-content">
                 <button class="close-button" onclick="hidePopup()">×</button>
                 <h2>Adicionar novo Produto</h2>
-                <form id="menu-form" method="post" action="">
+                <form id="menu-form">
                     <label for="name">Nome:</label>
                     <input type="text" id="name" name="name" required maxlength="50">
 
@@ -97,13 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <label for="quantity">Quantidade:</label>
                     <input type="number" id="quantity" name="quantity" min="1" required />
-
-                    <label for="fornecedor">Fornecedor:</label>
-                    <select id="fornecedor" name="fornecedor" required>
-                        <option value="1">Fornecedor 1</option>
-                        <option value="2">Fornecedor 2</option>
-                        <!-- Adicione mais fornecedores conforme necessário -->
-                    </select>
 
                     <label for="validade">Validade:</label>
                     <input type="date" id="validade" name="validade" required />
@@ -131,7 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             const description = document.getElementById('description').value;
             const price = document.getElementById('price').value;
             const quantity = document.getElementById('quantity').value;
-            const fornecedor = document.getElementById('fornecedor').value;
             const validade = document.getElementById('validade').value;
 
             // Envia os dados para o PHP
@@ -140,18 +96,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             formData.append('description', description);
             formData.append('price', price);
             formData.append('quantity', quantity);
-            formData.append('fornecedor', fornecedor);
             formData.append('validade', validade);
 
-            fetch('', {
+            fetch('estoque.php', {
                 method: 'POST',
                 body: formData
             })
             .then(response => response.text())
             .then(data => {
-                // Aqui você pode adicionar o código para atualizar a página ou exibir uma mensagem de sucesso.
                 alert('Produto adicionado com sucesso!');
                 hidePopup();
+                // Opcional: Atualizar a lista de produtos
+                // document.getElementById('menu').innerHTML += data;
             })
             .catch(error => {
                 console.error('Erro:', error);

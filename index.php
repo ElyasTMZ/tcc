@@ -1,7 +1,7 @@
 <?php
-include 'db.php';
+include 'php_action/db.php'; // Inclua a conexão com o banco de dados
 include 'header.php';
-
+// Consulta para buscar todos os produtos
 $query = 'SELECT * FROM tbProdutos';
 $stmt = $pdo->query($query);
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -12,25 +12,25 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="utf-8">
     <title>Cardápio</title>
-    <link rel="stylesheet" href="_CSS/index.css"> <!-- Inclua seu CSS principal aqui -->
+    <link rel="stylesheet" href="_css/index.css">
 </head>
 <body>
-    <div class="content"> <!-- Adicione uma classe para estilizar o conteúdo -->
-        <h1>Cardápio</h1>
-        <ul>
+    <div class="cardapio-container">
+        <div class="cardapio-content">
             <?php foreach ($products as $product): ?>
-                <li>
-                    <?php echo htmlspecialchars($product['descricao']); ?> - R$<?php echo number_format($product['valor'], 2, ',', '.'); ?>
+                <div class="cardapio-item">
+                    <h3><?php echo htmlspecialchars($product['descricao']); ?></h3>
+                    <p>Descrição: <?php echo htmlspecialchars($product['descricao']); ?></p>
+                    <p>R$ <?php echo number_format($product['valor'], 2, ',', '.'); ?></p>
                     <form action="carrinho.php" method="post">
                         <input type="hidden" name="item_id" value="<?php echo $product['codProd']; ?>">
                         <input type="hidden" name="item_name" value="<?php echo htmlspecialchars($product['descricao']); ?>">
                         <input type="hidden" name="item_price" value="<?php echo $product['valor']; ?>">
                         <button type="submit">Adicionar ao Carrinho</button>
                     </form>
-                </li>
+                </div>
             <?php endforeach; ?>
-        </ul>
-        <a href="carrinho.php">Ver Carrinho</a>
+        </div>
     </div>
 </body>
 </html>

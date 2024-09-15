@@ -1,9 +1,23 @@
 <?php
 session_start();
-include 'db.php';
+include 'php_action/db.php';
 include 'header.php';
+include 'cart_action/cartfunc.php'; // Inclui as funções do carrinho
 
-// Função para adicionar um item ao carrinho
+// Ações para aumentar ou diminuir quantidade via GET
+if (isset($_GET['action']) && isset($_GET['item_id'])) {
+    $item_id = $_GET['item_id'];
+    if ($_GET['action'] == 'increase') {
+        increaseItemQuantity($item_id);
+    } elseif ($_GET['action'] == 'decrease') {
+        decreaseItemQuantity($item_id);
+    }
+    // Redireciona para evitar reenvio do formulário e atualizar a página do carrinho
+    header('Location: carrinho.php');
+    exit;
+}
+
+// Função para adicionar item ao carrinho
 function addToCart($item_id, $item_name, $item_price) {
     if (!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = array();
@@ -20,22 +34,17 @@ function addToCart($item_id, $item_name, $item_price) {
     }
 }
 
-// Adiciona item ao carrinho se os dados forem enviados via POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+// Adiciona item ao carrinho se a ação for 'add'
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'add') {
     $item_id = $_POST['item_id'];
     $item_name = $_POST['item_name'];
     $item_price = $_POST['item_price'];
-    
-    addToCart($item_id, $item_name, $item_price);
-}
 
-// Função para calcular o total do carrinho
-function getCartTotal() {
-    $total = 0;
-    foreach ($_SESSION['cart'] as $item) {
-        $total += $item['price'] * $item['quantity'];
-    }
-    return $total;
+    addToCart($item_id, $item_name, $item_price);
+    
+    // Redireciona para evitar reenvio do formulário e para a página do carrinho
+    header('Location: carrinho.php');
+    exit;
 }
 ?>
 
@@ -44,7 +53,7 @@ function getCartTotal() {
 <head>
     <meta charset="utf-8">
     <title>Carrinho de Compras</title>
-    <link rel="stylesheet" type="text/css" href="_css/carrinho.css">
+    <link rel="stylesheet" type="text/css" href="_css/carrinho.css"> <!-- Inclua seu CSS para o carrinho -->
 </head>
 <body>
     <div class="container">
@@ -58,6 +67,7 @@ function getCartTotal() {
                         <th>Preço</th>
                         <th>Quantidade</th>
                         <th>Total</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,6 +77,14 @@ function getCartTotal() {
                             <td>R$<?php echo number_format($item['price'], 2, ',', '.'); ?></td>
                             <td><?php echo $item['quantity']; ?></td>
                             <td>R$<?php echo number_format($item['price'] * $item['quantity'], 2, ',', '.'); ?></td>
+                            <td>
+                                <!-- Botão para aumentar a quantidade -->
+                                <a href="carrinho.php?action=increase&item_id=<?php echo $item_id; ?>" class="btn">+</a>
+                                <!-- Botão para diminuir a quantidade -->
+                                <a href="carrinho.php?action=decrease&item_id=<?php echo $item_id; ?>" class="btn">-</a>
+                                <!-- Botão para remover o item -->
+                                <a href="remove_item.php?item_id=<?php echo $item_id; ?>" class="btn">Remover</a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -86,4 +104,5 @@ function getCartTotal() {
     </div>
 </body>
 </html>
+
 <?php include 'footer.php'; ?>
