@@ -49,4 +49,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Por favor, preencha todos os campos.";
     }
 }
+
+function registrarVenda($dataVenda, $horaVenda, $quantidade, $codUsu, $codProd) {
+    global $pdo;
+
+    try {
+        $stmt = $pdo->prepare('INSERT INTO tbVendas (dataVenda, horaVenda, quantidade, codUsu, codProd) VALUES (?, ?, ?, ?, ?)');
+        $stmt->execute([$dataVenda, $horaVenda, $quantidade, $codUsu, $codProd]);
+        return $pdo->lastInsertId(); // Retorna o ID do último pedido inserido
+    } catch (PDOException $e) {
+        echo "Erro: " . $e->getMessage();
+        return null;
+    }
+}
 ?>

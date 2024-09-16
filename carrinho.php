@@ -1,8 +1,8 @@
 <?php
 session_start();
-include 'php_action/db.php';
-include 'header.php';
-include 'cart_action/cartfunc.php'; // Inclui as funções do carrinho
+include_once 'header.php';
+include_once 'php_action/db.php';
+include_once 'php_action/cartfunc.php'; // Inclui as funções do carrinho
 
 // Ações para aumentar ou diminuir quantidade via GET
 if (isset($_GET['action']) && isset($_GET['item_id'])) {
@@ -15,23 +15,6 @@ if (isset($_GET['action']) && isset($_GET['item_id'])) {
     // Redireciona para evitar reenvio do formulário e atualizar a página do carrinho
     header('Location: carrinho.php');
     exit;
-}
-
-// Função para adicionar item ao carrinho
-function addToCart($item_id, $item_name, $item_price) {
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = array();
-    }
-
-    if (isset($_SESSION['cart'][$item_id])) {
-        $_SESSION['cart'][$item_id]['quantity']++;
-    } else {
-        $_SESSION['cart'][$item_id] = array(
-            'name' => $item_name,
-            'price' => $item_price,
-            'quantity' => 1
-        );
-    }
 }
 
 // Adiciona item ao carrinho se a ação for 'add'
@@ -92,10 +75,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
 
             <p>Total: R$<?php echo number_format(getCartTotal(), 2, ',', '.'); ?></p>
 
+            <!-- Formulário para finalizar a compra -->
             <form action="finalizar.php" method="post">
                 <input type="hidden" name="action" value="checkout">
                 <button type="submit">Finalizar Compra</button>
             </form>
+
         <?php else: ?>
             <p>Seu carrinho está vazio.</p>
         <?php endif; ?>
@@ -104,5 +89,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
     </div>
 </body>
 </html>
-
 <?php include 'footer.php'; ?>
+

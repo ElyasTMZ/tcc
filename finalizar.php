@@ -1,29 +1,23 @@
 <?php
 session_start();
 include 'php_action/db.php';
+include 'php_action/inserir.php'; // Inclua o arquivo onde a função registrarVenda está definida
 include 'header.php';
+
+
 // Verifique se a ação é a finalização da compra
 if ($_POST['action'] === 'checkout') {
-    // Aqui você deve ter um método para obter o código do cliente e usuário
-    $codCli = 1; // Suponha que o código do cliente seja 1, substitua com o código real
-    $codUsu = 2; // Suponha que o código do usuário seja 1, substitua com o código real
+    // Aqui você deve ter um método para obter o código do usuário
+    $codUsu = 1; // Suponha que o código do usuário seja 1, substitua com o código real
     $date = date('Y-m-d');
     $time = date('H:i:s');
-
-    // Registra o pedido na tabela tbVendas
-    $stmt = $pdo->prepare('INSERT INTO tbVendas (dataVenda, horaVenda, quantidade, codUsu, codCli, codProd) VALUES (?, ?, ?, ?, ?, ?)');
 
     // Variável para armazenar o ID do último pedido
     $lastOrderId = null;
 
     foreach ($_SESSION['cart'] as $item_id => $item) {
         $quantity = $item['quantity'];
-        $stmt->execute([$date, $time, $quantity, $codUsu, $codCli, $item_id]);
-
-        // Captura o ID do pedido
-        if ($lastOrderId === null) {
-            $lastOrderId = $pdo->lastInsertId();
-        }
+        $lastOrderId = registrarVenda($date, $time, $quantity, $codUsu, $item_id);
     }
 
     // Limpa o carrinho
