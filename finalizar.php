@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'php_action/db.php';
+include_once 'php_action/db.php';
 include 'php_action/inserir.php'; // Inclua o arquivo onde a função registrarVenda está definida
 include 'header.php';
 

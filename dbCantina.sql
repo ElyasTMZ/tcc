@@ -17,15 +17,16 @@ create table tbfuncionarios (
     primary key (codFunc)
 );
 
-create table tbUsuarios (
-    codUsu int not null auto_increment,
-    nome varchar(25) not null unique,
-    senha varchar(255) not null, -- Alterado para varchar(255) para segurança
-    email varchar(100),
-    telCelular varchar(15), -- Alterado para varchar para maior flexibilidade
-    codFunc int not null,
-    primary key (codUsu),
-    foreign key (codFunc) references tbfuncionarios(codFunc)
+CREATE TABLE tbUsuarios (
+    codUsu INT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(25) NOT NULL,
+    senha TEXT NOT NULL, -- Usado TEXT para armazenar o hash da senha com segurança
+    email VARCHAR(100) NOT NULL UNIQUE,
+    telCelular VARCHAR(15),
+    salt VARCHAR(32) NOT NULL, -- coluna para armazenar o salt
+    codFunc INT NOT NULL,
+    PRIMARY KEY (codUsu),
+    FOREIGN KEY (codFunc) REFERENCES tbFuncionarios(codFunc)
 );
 
 create table tbProdutos (

@@ -1,5 +1,5 @@
 <?php
-include 'php_action/db.php'; // Inclui a conexão com o banco de dados
+include_once 'php_action/db.php'; // Inclui a conexão com o banco de dados
 include 'header.php'; // Inclui o cabeçalho
 include 'php_action/inserir.php'; // Inclui a função de inserir produto
 
