@@ -1,20 +1,53 @@
 <?php
+session_start();
 include_once 'php_action/db.php';
-include_once 'php_action/funcsenha.php'; // Incluindo as funções de senha
-
+include_once 'php_action/funcsenha.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
-    if (autenticarUsuario($email, $senha)) {
-        // Login bem-sucedido
-        session_start();
-        $_SESSION['email'] = $email; // Armazenando o e-mail do usuário na sessão
-        header('Location: dashboard.php'); // Redirecionando para a página do dashboard
-        exit;
+    if (!empty($email) && !empty($senha)) {
+        // Verifica se o usuário existe e autentica a senha
+        if (autenticarUsuario($email, $senha)) {
+            // Busca os dados do usuário
+            $sql = "SELECT codUsu, nome, email FROM tbUsuarios WHERE email = :email";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($usuario) {
+                // Armazena as informações do usuário na sessão
+                $_SESSION['codUsu'] = $usuario['codUsu'];
+                $_SESSION['nome'] = $usuario['nome'];
+                $_SESSION['email'] = $usuario['email'];
+
+                // Verifica se o usuário é um funcionário (admin) através da tabela tbFuncionarios
+                $sqlTipo = "SELECT tipoUsuario FROM tbFuncionarios WHERE email = :email";
+                $stmtTipo = $pdo->prepare($sqlTipo);
+                $stmtTipo->bindParam(':email', $email);
+                $stmtTipo->execute();
+                $tipoUsuario = $stmtTipo->fetchColumn();
+
+                if ($tipoUsuario === 'admin') {
+                    // Usuário é um administrador
+                    $_SESSION['tipoUsuario'] = 'admin';
+                    header('Location: dashboard.php'); // Redireciona para a dashboard
+                } else {
+                    // Usuário é um funcionário comum ou cliente
+                    $_SESSION['tipoUsuario'] = 'funcionario';
+                    header('Location: menu.php'); // Redireciona para o menu do cliente
+                }
+                exit();
+            } else {
+                $erro = "Usuário não encontrado.";
+            }
+        } else {
+            $erro = "Credenciais inválidas.";
+        }
     } else {
-        $erro = "E-mail ou senha incorretos";
+        $erro = "Preencha todos os campos.";
     }
 }
 ?>
@@ -29,30 +62,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <header>
-        <h1>Bem-vindo à Tela de Login</h1>
+        <h1>Login</h1>
     </header>
     
-    <div class="login-container">
-        <h2>Login</h2>
-        
-        <form action="php_action/login.php" method="post">
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" required placeholder="Insira seu E-mail">
-            
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" required placeholder="Insira sua senha">
-            
-            <button type="submit">Entrar</button>
-            
-            <a href="recuperar_senha.php" class="link-esqueci-senha">Esqueci minha senha</a>
-            <a href="cadastro.php" class="link-cadastrar-se">Cadastrar-se</a>
-        </form>
+    <div class="form-container">
+        <div class="login-container">
+            <h2>Faça seu login</h2>
+
+            <?php
+            // Exibe a mensagem de erro, se houver
+            if (!empty($erro)) {
+                echo "<p style='color:red;'>$erro</p>";
+            }
+
+            // Exibe uma mensagem de sucesso após o cadastro
+            if (isset($_GET['sucesso']) && $_GET['sucesso'] == 1) {
+                echo "<p style='color:green;'>Cadastro realizado com sucesso! Faça o login.</p>";
+            }
+            ?>
+
+            <form action="login.php" method="post">
+                <!-- Campo de e-mail -->
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required placeholder="Insira seu E-mail">
+                
+                <!-- Campo de senha -->
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required placeholder="Insira sua senha">
+                
+                <!-- Botão de login -->
+                <button type="submit">Entrar</button>
+                
+                <!-- Links para cadastro -->
+                <div class="links">
+                    <span>Não tem uma conta? </span>
+                    <a href="cadastro.php">Cadastre-se</a>
+                </div>
+            </form>
+        </div>
     </div>
-    
-    <footer>
-        <p>© 2024 Sua Empresa. Todos os direitos reservados.</p>
-    </footer>
 </body>
 </html>
-
-<?php include 'footer.php'; ?>

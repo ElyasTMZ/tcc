@@ -1,29 +1,46 @@
 <?php
 session_start();
+// include_once 'header.php';
 include_once 'php_action/db.php';
-include 'php_action/inserir.php'; // Inclua o arquivo onde a função registrarVenda está definida
-include 'header.php';
+include_once 'php_action/cartfunc.php'; // Inclui as funções do carrinho
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'checkout') {
+    // Verificar se o carrinho não está vazio
+    if (!empty($_SESSION['cart'])) {
+        // Obtém o usuário logado, por exemplo, de uma variável de sessão
+        $codUsu = $_SESSION['user_id']; // Assuma que você tenha uma sessão de usuário
 
-// Verifique se a ação é a finalização da compra
-if ($_POST['action'] === 'checkout') {
-    // Aqui você deve ter um método para obter o código do usuário
-    $codUsu = 1; // Suponha que o código do usuário seja 1, substitua com o código real
-    $date = date('Y-m-d');
-    $time = date('H:i:s');
+        // Obtém a data e hora atuais
+        $dataVenda = date('Y-m-d');
+        $horaVenda = date('H:i:s');
 
-    // Variável para armazenar o ID do último pedido
-    $lastOrderId = null;
+        // Registra cada item no carrinho
+        foreach ($_SESSION['cart'] as $item_id => $item) {
+            $quantidade = $item['quantity'];
+            // Registra a venda
+            $lastOrderId = registrarVenda($dataVenda, $horaVenda, $quantidade, $codUsu, $item_id);
 
-    foreach ($_SESSION['cart'] as $item_id => $item) {
-        $quantity = $item['quantity'];
-        $lastOrderId = registrarVenda($date, $time, $quantity, $codUsu, $item_id);
+            if ($lastOrderId === null) {
+                echo "Houve um problema ao registrar seu pedido. Por favor, tente novamente.";
+                exit;
+            }
+        }
+
+        // Limpa o carrinho após a finalização da compra
+        $_SESSION['cart'] = [];
+
+        echo "Compra finalizada com sucesso!";
+    } else {
+        echo "O carrinho está vazio.";
     }
-
-    // Limpa o carrinho
-    unset($_SESSION['cart']);
+} else {
+    echo "Ação inválida.";
 }
 ?>
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="pt-br">

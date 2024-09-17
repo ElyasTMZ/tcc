@@ -14,10 +14,15 @@
         </div>
         <div class="menu">
             <nav class="links">
-                <a href="index.php">Cardápio</a>
+                <a href="menu.php">Cardápio</a>
                 <a href="pedidos.php">Pedidos</a>
                 <a href="carrinho.php">Carrinho</a>
                 <a href="perfil.php">Meu Perfil</a>
             </nav>
         </div>
+        <div class="logout-button">
+            <a href="php_action/logout.php">Sair</a>
+        </div>
     </header>
+</body>
+</html>

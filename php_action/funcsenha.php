@@ -1,38 +1,56 @@
 <?php
-include_once 'db.php'; // Incluindo o arquivo de conexão
+include_once 'db.php'; // Inclui a conexão com o banco de dados
 
-// Função para criar um hash da senha
-function criarHashSenha($senha) {
-    return password_hash($senha, PASSWORD_BCRYPT);
+// Função para gerar salt
+function gerarSalt() {
+    return bin2hex(random_bytes(16)); // Gera um salt de 32 caracteres hexadecimais
 }
 
-// Função para verificar a senha
-function verificarSenha($senha, $hash) {
-    return password_verify($senha, $hash);
+// Função para criar o hash da senha utilizando o salt
+function criarHashSenha($senha, $salt) {
+    return hash('sha256', $senha . $salt); // Cria um hash da senha com o salt
 }
 
-// Função para registrar um novo usuário
+// Função para registrar o usuário no banco de dados
 function registrarUsuario($nome, $email, $telCelular, $senha) {
-    global $pdo; // Usando a conexão PDO global
+    global $pdo;
 
-    $hashSenha = criarHashSenha($senha);
+    // Gera o salt e cria o hash da senha
+    $salt = gerarSalt();
+    $hashSenha = criarHashSenha($senha, $salt);
 
-    $sql = "INSERT INTO tbUsuarios (nome, email, telCelular, senha) VALUES (:nome, :email, :telCelular, :senha)";
-    $stmt = $pdo->prepare($sql);
-    
-    $stmt->bindParam(':nome', $nome);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':telCelular', $telCelular);
-    $stmt->bindParam(':senha', $hashSenha);
-    
-    return $stmt->execute(); // Retorna true se a execução for bem-sucedida
+    try {
+        // SQL para inserir dados na tabela tbUsuarios
+        $sql = "INSERT INTO tbUsuarios (nome, senha, email, telCelular, salt) 
+                VALUES (:nome, :senha, :email, :telCelular, :salt)";
+        
+        // Preparar a declaração
+        $stmt = $pdo->prepare($sql);
+        
+        // Bind dos parâmetros
+        $stmt->bindParam(':nome', $nome);
+        $stmt->bindParam(':senha', $hashSenha);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':telCelular', $telCelular);
+        $stmt->bindParam(':salt', $salt);
+
+        // Executar a declaração
+        $stmt->execute();
+        
+        return true;
+    } catch (PDOException $e) {
+        // Exibir mensagem de erro e retornar false
+        echo "Erro ao registrar o usuário: " . $e->getMessage();
+        return false;
+    }
 }
 
 // Função para autenticar um usuário
 function autenticarUsuario($email, $senha) {
-    global $pdo; // Usando a conexão PDO global
+    global $pdo;
 
-    $sql = "SELECT senha FROM tbUsuarios WHERE email = :email";
+    // Busca o hash da senha e o salt do banco de dados
+    $sql = "SELECT senha, salt FROM tbUsuarios WHERE email = :email";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':email', $email);
     $stmt->execute();
@@ -40,9 +58,19 @@ function autenticarUsuario($email, $senha) {
     $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if ($resultado) {
-        return verificarSenha($senha, $resultado['senha']);
+        // Verifica se a senha fornecida corresponde ao hash armazenado
+        return verificarSenha($senha, $resultado['senha'], $resultado['salt']);
     }
     
     return false; // Usuário não encontrado
+}
+
+// Função para verificar a senha
+function verificarSenha($senha, $hashArmazenado, $salt) {
+    // Cria o hash da senha fornecida usando o salt armazenado
+    $hashSenha = criarHashSenha($senha, $salt);
+    
+    // Compara o hash da senha fornecida com o hash armazenado
+    return $hashSenha === $hashArmazenado;
 }
 ?>

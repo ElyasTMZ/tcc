@@ -8,6 +8,8 @@ header {
   top: 0;
   left: 0;
   z-index: 10; /* Garante que o cabeçalho fique acima do conteúdo */
+  padding: 0 20px; /* Adiciona um pouco de espaçamento interno */
+  box-sizing: border-box; /* Inclui o padding e border no cálculo da largura total */
 }
 
 .logo img {
@@ -18,14 +20,14 @@ header {
 }
 
 .menu {
-  position: absolute;
-  left: 25%;
+  flex-grow: 1; /* Faz com que o menu ocupe o espaço disponível */
   display: flex;
   align-items: center;
+  justify-content: center; /* Centraliza os itens no menu */
 }
 
 .menu a {
-  margin-inline-start: 80px;
+  margin: 0 15px; /* Espaçamento entre os links */
   text-decoration: none;
   color: #ffffff; /* Cor dos links */
   font-size: 20px;
@@ -33,4 +35,24 @@ header {
 
 .menu a:hover {
   text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+}
+
+.logout-button {
+  margin-left: auto; /* Move o botão para a extrema direita */
+  display: flex;
+  align-items: center;
+}
+
+.logout-button a {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 18px;
+  background-color: #B12B4A; /* Cor de fundo do botão */
+  padding: 10px 20px; /* Espaçamento interno do botão */
+  border-radius: 5px; /* Borda arredondada */
+  transition: background-color 0.3s; /* Efeito de transição na cor de fundo */
+}
+
+.logout-button a:hover {
+  background-color: #A11F40; /* Cor de fundo ao passar o mouse */
 }

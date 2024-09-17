@@ -1,5 +1,5 @@
 <?php
-include 'db.php'; // Inclui o arquivo de conexão com o banco de dados
+include 'tcc/php_action/db.php'; // Inclui o arquivo de conexão com o banco de dados
 
 function inserirProduto($descricao, $quantidade, $valor, $validade, $dataEntrada, $horaEntrada) {
     global $pdo; // Utiliza a conexão global com o banco de dados
@@ -24,7 +24,7 @@ function inserirProduto($descricao, $quantidade, $valor, $validade, $dataEntrada
         $stmt->execute();
         echo "Produto adicionado com sucesso!";
     } catch (PDOException $e) {
-        echo "Erro: " . $e->getMessage();
+        echo "Erro ao adicionar produto: " . $e->getMessage();
     }
 }
 
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     var_dump($_POST); // Adicione esta linha para verificar os dados recebidos
 
     // Verifica se todos os campos necessários foram preenchidos
-    if (isset($_POST['name']) && isset($_POST['description']) && isset($_POST['price'])) {
+    if (isset($_POST['description']) && isset($_POST['price']) && isset($_POST['validade'])) {
         $descricao = $_POST['description'];
         $valor = $_POST['price'];
         $quantidade = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1;
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Chama a função para inserir o produto
         inserirProduto($descricao, $quantidade, $valor, $validade, $dataEntrada, $horaEntrada);
     } else {
-        echo "Por favor, preencha todos os campos.";
+        echo "Por favor, preencha todos os campos necessários.";
     }
 }
 
@@ -54,11 +54,16 @@ function registrarVenda($dataVenda, $horaVenda, $quantidade, $codUsu, $codProd) 
     global $pdo;
 
     try {
+        // Preparar a declaração SQL
         $stmt = $pdo->prepare('INSERT INTO tbVendas (dataVenda, horaVenda, quantidade, codUsu, codProd) VALUES (?, ?, ?, ?, ?)');
+        // Executar a declaração com os parâmetros fornecidos
         $stmt->execute([$dataVenda, $horaVenda, $quantidade, $codUsu, $codProd]);
-        return $pdo->lastInsertId(); // Retorna o ID do último pedido inserido
+        // Retorna o ID do último pedido inserido
+        return $pdo->lastInsertId();
     } catch (PDOException $e) {
-        echo "Erro: " . $e->getMessage();
+        // Exibir mensagem de erro
+        echo "Erro ao registrar a venda: " . $e->getMessage();
+        // Retorna null em caso de erro
         return null;
     }
 }

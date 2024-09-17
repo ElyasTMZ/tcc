@@ -1,17 +1,28 @@
 <?php
-include_once 'php_action/db.php';
-include_once 'php_action/funcsenha.php'; // Incluindo as funções de senha
+include_once 'php_action/db.php'; // Inclui a conexão com o banco de dados
+include_once 'php_action/funcsenha.php'; // Inclui as funções relacionadas às senhas
+
+$erro = ''; // Variável para armazenar mensagens de erro
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nome = $_POST['nome'];
-    $email = $_POST['email'];
-    $telCelular = $_POST['telCelular'];
+    // Recebe os dados do formulário
+    $nome = trim($_POST['nome']);
+    $email = trim($_POST['email']);
+    $telCelular = trim($_POST['telCelular']);
     $senha = $_POST['senha'];
 
-    if (registrarUsuario($nome, $email, $telCelular, $senha)) {
-        header('Location: login.php'); // Redireciona para a página de login após cadastro
+    // Verifica se todos os campos foram preenchidos
+    if (!empty($nome) && !empty($email) && !empty($telCelular) && !empty($senha)) {
+        // Tenta registrar o usuário
+        if (registrarUsuario($nome, $email, $telCelular, $senha)) {
+            // Redireciona para a página de login após o cadastro bem-sucedido
+            header('Location: login.php?sucesso=1');
+            exit();
+        } else {
+            $erro = "Erro ao registrar o usuário. Verifique os dados e tente novamente.";
+        }
     } else {
-        $erro = "Erro ao registrar o usuário";
+        $erro = "Por favor, preencha todos os campos necessários.";
     }
 }
 ?>
@@ -32,8 +43,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="form-container">
         <div class="cadastro-container">
             <h2>Cadastre-se</h2>
-            
-            <form action="php_action/cadastro.php" method="post">
+
+            <?php
+            // Exibe a mensagem de erro, se houver
+            if (!empty($erro)) {
+                echo "<p style='color:red;'>$erro</p>";
+            }
+            ?>
+
+            <form action="cadastro.php" method="post">
                 <!-- Campo de e-mail -->
                 <label for="email">E-mail:</label>
                 <input type="email" id="email" name="email" required placeholder="Insira seu E-mail">
@@ -63,5 +81,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </body>
 </html>
-
-

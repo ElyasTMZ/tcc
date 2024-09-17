@@ -1,78 +1,71 @@
--- apagando banco de dados
- drop database dbcantina;
+-- Exclui o banco de dados existente, se houver
+DROP DATABASE IF EXISTS dbcantina;
 
--- criando banco de dados
-create database dbcantina;
+-- Cria um novo banco de dados
+CREATE DATABASE dbcantina;
 
--- acessando banco de dados
-use dbcantina;
+-- Seleciona o banco de dados
+USE dbcantina;
 
--- criando as tabelas
-
-create table tbfuncionarios (
-    codFunc int not null auto_increment,
-    nome varchar(100) not null unique,
-    email varchar(100) not null unique,
-    telefone varchar(15), -- Alterado para varchar para maior flexibilidade
-    primary key (codFunc)
+-- Cria a tabela de funcionários
+CREATE TABLE tbFuncionarios (
+    codFunc INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    telCelular VARCHAR(15) NOT NULL,
+    senha VARCHAR(255) NOT NULL, -- Hash da senha
+    salt VARCHAR(32) NOT NULL, -- Salt para proteger a senha
+    tipoUsuario ENUM('funcionario', 'admin') DEFAULT 'funcionario', -- Diferenciar entre funcionários comuns e administradores
+    status ENUM('ativo', 'inativo') DEFAULT 'ativo', -- Define se o funcionário está ativo ou inativo
+    dataCadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Data de cadastro do funcionário
 );
 
+-- Insere o primeiro administrador manualmente
+INSERT INTO tbFuncionarios (nome, email, telCelular, senha, salt, tipoUsuario) 
+VALUES ('Administrador', 'admin@cantina.com', '11999999999', 'ae708c50e9845c894c2c091be8b0479f3ad88861afacfe9761c2d70755b3697e', '66612b4187aa08c278be2fd745bc675e', 'admin');
+
+-- Cria a tabela de usuários
 CREATE TABLE tbUsuarios (
     codUsu INT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(25) NOT NULL,
     senha TEXT NOT NULL, -- Usado TEXT para armazenar o hash da senha com segurança
     email VARCHAR(100) NOT NULL UNIQUE,
     telCelular VARCHAR(15),
-    salt VARCHAR(32) NOT NULL, -- coluna para armazenar o salt
-    codFunc INT NOT NULL,
-    PRIMARY KEY (codUsu),
-    FOREIGN KEY (codFunc) REFERENCES tbFuncionarios(codFunc)
+    salt VARCHAR(32) NOT NULL, -- Coluna para armazenar o salt
+    PRIMARY KEY (codUsu)
 );
 
-create table tbProdutos (
-    codProd int not null auto_increment,
-    descricao varchar(100),
-    quantidade int,
-    valor decimal(9,2),
-    validade date,
-    dataEntrada date,
-    horaEntrada time,
-    primary key (codProd)
+-- Cria a tabela de produtos
+CREATE TABLE tbProdutos (
+    codProd INT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(25) NOT NULL,
+    descricao VARCHAR(100),
+    quantidade INT,
+    valor DECIMAL(9,2),
+    validade DATE,
+    dataEntrada DATE,
+    horaEntrada TIME,
+    PRIMARY KEY (codProd)
 );
 
-create table tbVendas (
-    codVenda int not null auto_increment,
-    dataVenda date,
-    horaVenda time,
-    quantidade int,
-    codUsu int not null,
-    codProd int not null,
-    status varchar(20) default 'pendente', -- Adicionado campo status
-    primary key (codVenda),
-    foreign key (codUsu) references tbUsuarios(codUsu),
-    foreign key (codProd) references tbProdutos(codProd)
+-- Cria a tabela de vendas
+CREATE TABLE tbVendas (
+    codVenda INT NOT NULL AUTO_INCREMENT,
+    dataVenda DATE,
+    horaVenda TIME,
+    quantidade INT,
+    codUsu INT NOT NULL,
+    codProd INT NOT NULL,
+    status VARCHAR(20) DEFAULT 'pendente', -- Adicionado campo status
+    PRIMARY KEY (codVenda),
+    FOREIGN KEY (codUsu) REFERENCES tbUsuarios(codUsu),
+    FOREIGN KEY (codProd) REFERENCES tbProdutos(codProd)
 );
 
-insert into tbProdutos (descricao, quantidade, valor, validade, dataEntrada, horaEntrada) 
-values ('Refrigerante Coca-Cola 350ml', 100, 4.50, '2024-12-31', '2024-09-15', '08:30:00');
-
-insert into tbProdutos (descricao, quantidade, valor, validade, dataEntrada, horaEntrada) 
-values ('Coxinha de Frango', 50, 5.00, '2024-09-20', '2024-09-15', '08:45:00');
-
-insert into tbProdutos (descricao, quantidade, valor, validade, dataEntrada, horaEntrada) 
-values ('Pão de Queijo', 75, 2.50, '2024-09-19', '2024-09-15', '09:00:00');
-
-insert into tbProdutos (descricao, quantidade, valor, validade, dataEntrada, horaEntrada) 
-values ('Suco de Laranja 300ml', 80, 3.00, '2024-09-25', '2024-09-15', '09:15:00');
-
-insert into tbProdutos (descricao, quantidade, valor, validade, dataEntrada, horaEntrada) 
-values ('Salgado de Presunto e Queijo', 60, 4.00, '2024-09-18', '2024-09-15', '09:30:00');
-
-insert into tbProdutos (descricao, quantidade, valor, validade, dataEntrada, horaEntrada) 
-values ('Bolo de Chocolate', 40, 6.50, '2024-09-22', '2024-09-15', '09:45:00');
-
-INSERT INTO tbfuncionarios (nome, email, telefone) 
-VALUES ('João da Silva', 'joao.silva@example.com', '123456789');
-
-INSERT INTO tbUsuarios (nome, senha, email, telCelular, codFunc) 
-VALUES ('Maria Oliveira', 'senhaSegura123', 'maria.oliveira@example.com', '987654321', 1);
+-- Insere dados de exemplo na tabela tbProdutos
+INSERT INTO tbProdutos (nome, descricao, quantidade, valor, validade, dataEntrada, horaEntrada) VALUES
+('Misto Quente', 'Sanduíche de presunto e queijo, bem quentinho.', 50, 8.50, '2025-12-31', '2024-09-16', '08:00:00'),
+('Coxinha', 'Coxinha de frango crocante, recheada e deliciosa.', 40, 6.00, '2025-11-30', '2024-09-16', '09:15:00'),
+('Empada de Palmito', 'Empada recheada com palmito e temperos especiais.', 30, 7.75, '2025-10-31', '2024-09-16', '10:30:00'),
+('Bolo de Chocolate', 'Bolo de chocolate fofinho com cobertura cremosa.', 20, 12.00, '2025-12-15', '2024-09-16', '11:45:00'),
+('Suco Natural', 'Suco natural de laranja, refrescante e saudável.', 60, 4.50, '2026-01-10', '2024-09-16', '13:00:00');

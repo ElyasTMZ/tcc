@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
             <p>Seu carrinho está vazio.</p>
         <?php endif; ?>
 
-        <a href="index.php">Voltar ao Cardápio</a>
+        <a href="menu.php">Voltar ao Cardápio</a>
     </div>
 </body>
 </html>
