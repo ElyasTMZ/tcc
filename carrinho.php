@@ -4,6 +4,11 @@ include_once 'header.php';
 include_once 'php_action/db.php';
 include_once 'php_action/cartfunc.php'; // Inclui as funções do carrinho
 
+if (!isset($_SESSION['email'])) {
+    header('Location: /Tcc/login.php'); // Redireciona para a página de login
+    exit();
+}
+
 // Ações para aumentar ou diminuir quantidade via GET
 if (isset($_GET['action']) && isset($_GET['item_id'])) {
     $item_id = $_GET['item_id'];

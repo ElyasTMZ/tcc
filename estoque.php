@@ -3,6 +3,11 @@ include_once 'php_action/db.php'; // Inclui a conexão com o banco de dados
 include 'header.php'; // Inclui o cabeçalho
 include 'php_action/inserir.php'; // Inclui a função de inserir produto
 
+if (!isset($_SESSION['email'])) {
+    header('Location: /Tcc/login.php'); // Redireciona para a página de login
+    exit();
+}
+
 // Chama a função de inserir produto se for uma requisição POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Verifica se todos os campos necessários foram preenchidos

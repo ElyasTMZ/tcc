@@ -4,6 +4,11 @@ session_start();
 include_once 'php_action/db.php';
 include_once 'php_action/cartfunc.php'; // Inclui as funções do carrinho
 
+if (!isset($_SESSION['email'])) {
+    header('Location: /Tcc/login.php'); // Redireciona para a página de login
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'checkout') {
     // Verificar se o carrinho não está vazio
     if (!empty($_SESSION['cart'])) {

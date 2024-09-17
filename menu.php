@@ -2,6 +2,11 @@
 include_once 'php_action/db.php'; // Inclua a conexão com o banco de dados
 include 'header.php';
 
+if (!isset($_SESSION['email'])) {
+    header('Location: /Tcc/login.php'); // Redireciona para a página de login
+    exit();
+}
+
 // Consulta para buscar todos os produtos
 $query = 'SELECT * FROM tbProdutos';
 $stmt = $pdo->query($query);
