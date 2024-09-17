@@ -3,10 +3,10 @@ session_start();
 include_once 'php_action/db.php'; // Inclui a conexão com o banco de dados
 
 // Verifica se o usuário está logado
-if (!isset($_SESSION['email'])) {
+/*if (!isset($_SESSION['email'])) {
     header('Location: /Tcc/login.php'); // Redireciona para a página de login
     exit();
-}
+}*/
 
 // Busca informações do usuário logado
 $emailUsuario = $_SESSION['email'];
@@ -80,7 +80,7 @@ if ($tipoUsuario === 'funcionario') {
             <!-- Opção de cadastrar funcionário -->
             <section class="cadastro-funcionario">
                 <h2>Área Administrativa</h2>
-                <a href="cadastro_funcionario.php">Cadastrar Novo Funcionário</a>
+                <a href="cadastro_func.php">Cadastrar Novo Funcionário</a>
             </section>
         <?php else: ?>
             <!-- Caso seja cliente, exibe uma mensagem diferente -->
@@ -92,3 +92,4 @@ if ($tipoUsuario === 'funcionario') {
     </div>
 </body>
 </html>
+<?php include 'footer.php'; ?>

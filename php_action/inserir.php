@@ -1,5 +1,5 @@
 <?php
-include 'tcc/php_action/db.php'; // Inclui o arquivo de conexão com o banco de dados
+include 'db.php'; // Inclui o arquivo de conexão com o banco de dados
 
 function inserirProduto($descricao, $quantidade, $valor, $validade, $dataEntrada, $horaEntrada) {
     global $pdo; // Utiliza a conexão global com o banco de dados

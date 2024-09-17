@@ -42,11 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
     echo "Ação inválida.";
 }
 ?>
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -63,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
         <?php else: ?>
             <p>Houve um problema ao registrar seu pedido. Por favor, tente novamente.</p>
         <?php endif; ?>
-        <a href="index.php">Voltar ao Cardápio</a>
+        <a href="menu.php">Voltar ao Cardápio</a>
     </div>
 </body>
 </html>
