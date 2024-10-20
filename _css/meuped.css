@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+    max-width: 90%; /* Para garantir que ele não ultrapasse o tamanho da tela */
+}
+
+h1 {
+    color: #c10a52;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 18px;
+    color: #000000;
+}
+
+.code {
+    font-size: 32px;
+    color: #424242;
+    margin: 20px 0;
+}
+
+.instructions {
+    font-size: 14px;
+    color: #777;
+}
+
+button {
+    background-color: #c10a52;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    width: 100%; /* Para o botão se ajustar ao tamanho do container */
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Media Query para telas menores que 600px */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    .code {
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    .instructions {
+        font-size: 12px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}

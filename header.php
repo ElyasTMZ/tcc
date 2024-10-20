@@ -1,11 +1,15 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start(); // Inicia a sessão se ainda não estiver ativa
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Seu site">
-    <title>Seu Site</title>
-    <link rel="stylesheet" href="_CSS/header.css"> 
+    <link rel="stylesheet" href="_css/header.css"> 
 </head>
 <body>
     <header>
@@ -15,14 +19,26 @@
         <div class="menu">
             <nav class="links">
                 <a href="menu.php">Cardápio</a>
-                <a href="pedidos.php">Pedidos</a>
+                <a href="meuped.php">Pedidos</a>
                 <a href="carrinho.php">Carrinho</a>
-                <a href="perfil.php">Meu Perfil</a>
+                <a href="MeuPerfil.php">Meu Perfil</a>
             </nav>
+        </div>
+        <div class="user-info">
+            <?php if (isset($_SESSION['foto']) && !empty($_SESSION['foto'])): ?>
+                <img src="<?php echo $_SESSION['foto']; ?>" alt="Foto do Usuário" class="user-photo">
+            <?php else: ?>
+                <img src="image/logoetec.png" alt="Logo" class="user-photo"> <!-- Foto padrão -->
+            <?php endif; ?>
         </div>
         <div class="logout-button">
             <a href="php_action/logout.php">Sair</a>
         </div>
     </header>
+
+    <div class="content">
+        <!-- Conteúdo Principal da Página -->
+        <h1>Bem-vindo à Nossa Página</h1>
+    </div>
 </body>
 </html>

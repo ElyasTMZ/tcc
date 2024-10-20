@@ -1,3 +1,7 @@
+a, button {
+    outline: none; /* Remove o contorno azul ao focar no link ou botão */
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -10,37 +14,59 @@ html, body {
 body {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center; /* Centraliza verticalmente */
     padding-top: 120px; /* Ajuste para a altura do cabeçalho */
-    min-height: 100vh;
 }
 
 .container {
-    width: 80%;
-    max-width: 800px;
-    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    padding: 30px;
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 5px 20px rgba(120, 120, 120, 0.3);
-    text-align: center;
-    margin-top: 20px; /* Ajuste se necessário */
+    border-radius: 12px;
+    box-shadow: 0 5px 30px rgba(120, 120, 120, 0.3);
+    text-align: center; /* Centraliza o texto dentro da div */
+    margin: auto; /* Garante que a div fique centralizada */
 }
 
 h1 {
     color: #ff0066;
     margin-bottom: 20px;
+    font-size: 24px;
 }
 
-p {
+.success, .error {
     margin: 10px 0;
+    font-size: 18px; /* Tamanho da fonte para mensagens */
 }
 
-a {
-    color: #006CB5;
-    text-decoration: none;
-    font-weight: bold;
+.success {
+    color: #28a745; /* Cor verde para a mensagem de sucesso */
 }
 
-a:hover {
-    text-decoration: underline;
+.error {
+    color: #dc3545; /* Cor vermelha para a mensagem de erro */
 }
+
+strong {
+    color: #ff0066; /* Cor do texto forte */
+}
+
+.back-button {
+    color: #006CB5; /* Cor do texto */
+    background-color: transparent; /* Fundo transparente */
+    border: 2px solid #ff0066; /* Contorno rosa */
+    border-radius: 5px; /* Arredonda os cantos do botão */
+    padding: 10px 20px; /* Espaçamento interno do botão */
+    font-weight: bold; /* Peso da fonte */
+    cursor: pointer; /* Muda o cursor ao passar sobre o botão */
+    transition: background-color 0.3s, color 0.3s; /* Transições suaves */
+}
+
+.back-button:hover {
+    background-color: #ff0066; /* Cor de fundo ao passar o mouse */
+    color: white; /* Muda a cor do texto para branco ao passar o mouse */
+    text-decoration: none; /* Remove qualquer sublinhado */
+}
+
+

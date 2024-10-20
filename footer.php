@@ -3,25 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rodapé</title>
+    <title>Rodapé Responsivo</title>
     <link rel="stylesheet" href="_css/footer.css">
-    <link rel="stylesheet" href="cabeçalho.css">
 </head>
 <body>
     <!-- Conteúdo da página -->
+    <div class="content">
+        <!-- Conteúdo da página -->
+    </div>
 
     <footer>
-        <p>&copy; Chefe é chefe vai Corinthians!!!. Todos os direitos reservados.</p>
-        <p>
-            <a href="sobre.html" style="color: rgb(73, 73, 73); text-decoration: none;">Sobre</a> |
-            <a href="contato.html" style="color: rgb(73, 73, 73); text-decoration: none;">Contato</a> |
-            <a href="privacidade.html" style="color: rgb(73, 73, 73); text-decoration: none;">Política de Privacidade</a>
-        </p>
-        <p>
-            Siga-nos nas redes sociais:
-            <a href="//twitter.com" target="_blank" style="color: white; text-decoration: none;">Twitter</a> |
-            <a href="https://instagram.com" target="_blank" style="color: white; text-decoration: none;">Instagram</a>
-        </p>
+        <div class="footer-content">
+            <p>&copy; Cantina da Etec Irmã Agostina</p>
+            <nav class="footer-nav">
+                <a href="sobre.html">Sobre</a>
+                <a href="contato.html">Contato</a>
+                <a href="privacidade.html">Política de Privacidade</a>
+            </nav>
+            <div class="social-media">
+                <p>Siga-nos nas redes sociais:</p>
+                <a href="//twitter.com" target="_blank">Twitter</a>
+                <a href="https://instagram.com" target="_blank">Instagram</a>
+            </div>
+        </div>
     </footer>
 </body>
 </html>

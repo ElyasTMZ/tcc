@@ -7,33 +7,24 @@ CREATE DATABASE dbcantina;
 -- Seleciona o banco de dados
 USE dbcantina;
 
--- Cria a tabela de funcionários
-CREATE TABLE tbFuncionarios (
-    codFunc INT AUTO_INCREMENT PRIMARY KEY,
+-- Cria a tabela de usuários com distinção entre tipos de usuários (admin e comum)
+CREATE TABLE tbUsuarios (
+    codUsu INT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     telCelular VARCHAR(15) NOT NULL,
     senha VARCHAR(255) NOT NULL, -- Hash da senha
     salt VARCHAR(32) NOT NULL, -- Salt para proteger a senha
-    tipoUsuario ENUM('funcionario', 'admin') DEFAULT 'funcionario', -- Diferenciar entre funcionários comuns e administradores
-    status ENUM('ativo', 'inativo') DEFAULT 'ativo', -- Define se o funcionário está ativo ou inativo
-    dataCadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Data de cadastro do funcionário
+    tipoUsuario ENUM('usuario', 'admin') DEFAULT 'usuario', -- Diferencia usuários comuns de administradores
+    status ENUM('ativo', 'inativo') DEFAULT 'ativo', -- Define se o usuário está ativo ou inativo
+    dataCadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Data de cadastro do usuário
+    foto VARCHAR(255) DEFAULT NULL, -- Coluna para armazenar o caminho da foto do usuário
+    PRIMARY KEY (codUsu)
 );
 
 -- Insere o primeiro administrador manualmente
-INSERT INTO tbFuncionarios (nome, email, telCelular, senha, salt, tipoUsuario) 
+INSERT INTO tbUsuarios (nome, email, telCelular, senha, salt, tipoUsuario) 
 VALUES ('Administrador', 'admin@cantina.com', '11999999999', 'ae708c50e9845c894c2c091be8b0479f3ad88861afacfe9761c2d70755b3697e', '66612b4187aa08c278be2fd745bc675e', 'admin');
-
--- Cria a tabela de usuários
-CREATE TABLE tbUsuarios (
-    codUsu INT NOT NULL AUTO_INCREMENT,
-    nome VARCHAR(25) NOT NULL,
-    senha TEXT NOT NULL, -- Usado TEXT para armazenar o hash da senha com segurança
-    email VARCHAR(100) NOT NULL UNIQUE,
-    telCelular VARCHAR(15),
-    salt VARCHAR(32) NOT NULL, -- Coluna para armazenar o salt
-    PRIMARY KEY (codUsu)
-);
 
 -- Cria a tabela de produtos
 CREATE TABLE tbProdutos (

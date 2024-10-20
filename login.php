@@ -10,8 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($email) && !empty($senha)) {
         // Verifica se o usuário existe e autentica a senha
         if (autenticarUsuario($email, $senha)) {
-            // Busca os dados do usuário
-            $sql = "SELECT codUsu, nome, email FROM tbUsuarios WHERE email = :email";
+            // Busca os dados do usuário incluindo telefone
+            $sql = "SELECT codUsu, nome, email, telCelular, tipoUsuario FROM tbUsuarios WHERE email = :email";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':email', $email);
             $stmt->execute();
@@ -22,21 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['codUsu'] = $usuario['codUsu'];
                 $_SESSION['nome'] = $usuario['nome'];
                 $_SESSION['email'] = $usuario['email'];
+                $_SESSION['telCelular'] = $usuario['telCelular'];
+                $_SESSION['tipoUsuario'] = $usuario['tipoUsuario'];
 
-                // Verifica se o usuário é um funcionário (admin) através da tabela tbFuncionarios
-                $sqlTipo = "SELECT tipoUsuario FROM tbFuncionarios WHERE email = :email";
-                $stmtTipo = $pdo->prepare($sqlTipo);
-                $stmtTipo->bindParam(':email', $email);
-                $stmtTipo->execute();
-                $tipoUsuario = $stmtTipo->fetchColumn();
-
-                if ($tipoUsuario === 'admin') {
+                // Verifica o tipo de usuário
+                if ($usuario['tipoUsuario'] === 'admin') {
                     // Usuário é um administrador
-                    $_SESSION['tipoUsuario'] = 'admin';
                     header('Location: dashboard.php'); // Redireciona para a dashboard
                 } else {
-                    // Usuário é um funcionário comum ou cliente
-                    $_SESSION['tipoUsuario'] = 'funcionario';
+                    // Usuário é um cliente comum
                     header('Location: menu.php'); // Redireciona para o menu do cliente
                 }
                 exit();
@@ -103,4 +97,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </body>
 </html>
-<?php include 'footer.php'; ?>

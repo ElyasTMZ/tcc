@@ -4,6 +4,7 @@ include_once 'header.php';
 include_once 'php_action/db.php';
 include_once 'php_action/cartfunc.php'; // Inclui as funções do carrinho
 
+// Verifica se o usuário está logado
 if (!isset($_SESSION['email'])) {
     header('Location: /Tcc/login.php'); // Redireciona para a página de login
     exit();
@@ -42,6 +43,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
     <meta charset="utf-8">
     <title>Carrinho de Compras</title>
     <link rel="stylesheet" type="text/css" href="_css/carrinho.css"> <!-- Inclua seu CSS para o carrinho -->
+    <style>
+        .btn {
+            display: inline-block;
+            padding: 10px 15px; /* Espaçamento interno */
+            color: #fff; /* Cor do texto */
+            background-color: #ff0066; /* Cor de fundo */
+            border: none; /* Remove a borda padrão */
+            border-radius: 5px; /* Bordas arredondadas */
+            text-decoration: none; /* Remove o sublinhado */
+            font-weight: bold; /* Negrito */
+            transition: background-color 0.3s; /* Efeito suave para a cor de fundo */
+        }
+
+        .btn:hover {
+            background-color: #e60059; /* Cor de fundo ao passar o mouse */
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -62,9 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
                     <?php foreach ($_SESSION['cart'] as $item_id => $item): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($item['name']); ?></td>
-                            <td>R$<?php echo number_format($item['price'], 2, ',', '.'); ?></td>
+                            <td>R$ <?php echo number_format($item['price'], 2, ',', '.'); ?></td>
                             <td><?php echo $item['quantity']; ?></td>
-                            <td>R$<?php echo number_format($item['price'] * $item['quantity'], 2, ',', '.'); ?></td>
+                            <td>R$ <?php echo number_format($item['price'] * $item['quantity'], 2, ',', '.'); ?></td>
                             <td>
                                 <!-- Botão para aumentar a quantidade -->
                                 <a href="carrinho.php?action=increase&item_id=<?php echo $item_id; ?>" class="btn">+</a>
@@ -78,21 +96,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
                 </tbody>
             </table>
 
-            <p>Total: R$<?php echo number_format(getCartTotal(), 2, ',', '.'); ?></p>
+            <p>Total: R$ <?php echo number_format(getCartTotal(), 2, ',', '.'); ?></p>
 
-            <!-- Formulário para finalizar a compra -->
-            <form action="finalizar.php" method="post">
-                <input type="hidden" name="action" value="checkout">
-                <button type="submit">Finalizar Compra</button>
-            </form>
+         <!-- Formulário para finalizar a compra -->
+<form action="pagamento.php" method="post"> <!-- Certifique-se de que está redirecionando para pagamento.php -->
+    <input type="hidden" name="action" value="checkout">
+    <button type="submit" class="btn">Finalizar Compra</button>
+</form>
 
         <?php else: ?>
             <p>Seu carrinho está vazio.</p>
         <?php endif; ?>
 
-        <a href="menu.php">Voltar ao Cardápio</a>
+        <a href="menu.php" class="btn">Voltar ao Cardápio</a>
     </div>
 </body>
 </html>
 <?php include 'footer.php'; ?>
-
