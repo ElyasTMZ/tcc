@@ -109,3 +109,38 @@ button:hover {
 strong {
     color: #ff0066; /* Cor do texto forte */
 }
+.back-button {
+    background-color: #c10a52; /* mesma cor do botão Adicionar */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none; /* remove underline do link */
+    display: inline-block; /* permite que padding e margin funcionem */
+    margin-top: 20px; /* espaçamento acima do botão */
+}
+
+.back-button:hover {
+    background-color: #a8093e; /* tom mais escuro para o hover */
+}
+.button-group {
+    margin-top: 20px; /* Espaço acima dos botões */
+}
+
+.history-button {
+    background-color: #c10a52; /* Cor do botão */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none; /* Remove underline do link */
+    display: inline-block; /* Permite que padding e margin funcionem */
+    margin-left: 10px; /* Espaço entre os botões */
+}
+
+.history-button:hover {
+    background-color: #a8093e; /* Tom mais escuro para hover */
+}
+

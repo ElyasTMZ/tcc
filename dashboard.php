@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 include_once 'php_action/db.php'; // Inclui a conexão com o banco de dados
 
@@ -21,13 +21,17 @@ if ($usuario['tipoUsuario'] !== 'admin') {
     exit();
 }
 
-// Resumo de vendas e estoque
-$resumoVendas = [];
-$produtosBaixoEstoque = [];
-
 // Resumo de vendas
-$stmtVendas = $pdo->query("SELECT COUNT(*) AS totalVendas, SUM(quantidade) AS totalItensVendidos FROM tbVendas");
-$resumoVendas = $stmtVendas->fetch(PDO::FETCH_ASSOC);
+$totalVendasConfirmadas = 0;
+$totalVendasCanceladas = 0;
+
+// Resumo de vendas confirmadas
+$stmtVendas = $pdo->query("SELECT COUNT(*) AS totalVendasConfirmadas FROM tbVendas WHERE status = 'confirmada'");
+$totalVendasConfirmadas = $stmtVendas->fetchColumn();
+
+// Resumo de vendas canceladas
+$stmtCanceladas = $pdo->query("SELECT COUNT(*) AS totalVendasCanceladas FROM tbVendas WHERE status = 'cancelada'");
+$totalVendasCanceladas = $stmtCanceladas->fetchColumn();
 
 // Produtos com baixa quantidade no estoque
 $stmtEstoqueBaixo = $pdo->query("SELECT nome, quantidade FROM tbProdutos WHERE quantidade <= 10");
@@ -54,8 +58,8 @@ $produtosBaixoEstoque = $stmtEstoqueBaixo->fetchAll(PDO::FETCH_ASSOC);
         <!-- Resumo de vendas -->
         <section class="resumo-vendas">
             <h2>Resumo de Vendas</h2>
-            <p>Total de vendas realizadas: <?php echo $resumoVendas['totalVendas'] ?? 0; ?></p>
-            <p>Total de itens vendidos: <?php echo $resumoVendas['totalItensVendidos'] ?? 0; ?></p>
+            <p>Total de vendas realizadas: <?php echo $totalVendasConfirmadas ?? 0; ?></p>
+            <p>Total de vendas canceladas: <?php echo $totalVendasCanceladas ?? 0; ?></p>
         </section>
 
         <!-- Produtos com baixa quantidade no estoque -->
@@ -76,8 +80,9 @@ $produtosBaixoEstoque = $stmtEstoqueBaixo->fetchAll(PDO::FETCH_ASSOC);
         <section class="gerenciamento">
             <h2>Gerenciamento</h2>
             <ul>
-                <li><a href="estoque.php">Gerenciar Produtos</a></li>
-                <li><a href="vendas.php">Ver Histórico de Vendas</a></li>
+                <li><a href="vendas.php">Gerenciar Pedidos</a></li>
+                <li><a href="estoque.php">Gerenciar Produtos</a></li> 
+                <li><a href="HistVendas.php">Histórico de Vendas</a></li> 
             </ul>
         </section>
     </div>

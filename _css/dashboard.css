@@ -62,3 +62,19 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+/* Estilo para o botão "Gerenciar Pedidos" */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Cor do fundo do botão */
+    color: white; /* Cor do texto do botão */
+    text-align: center;
+    text-decoration: none; /* Remove o sublinhado */
+    border-radius: 5px; /* Bordas arredondadas */
+    margin-left: 15px; /* Espaço entre os botões */
+}
+
+.btn:hover {
+    background-color: #45a049; /* Cor ao passar o mouse */
+}

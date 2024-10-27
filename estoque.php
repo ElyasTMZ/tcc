@@ -1,6 +1,5 @@
 <?php
 include_once 'php_action/db.php'; // Inclui a conexão com o banco de dados
-include 'header.php'; // Inclui o cabeçalho
 include 'php_action/inserir.php'; // Inclui a função de inserir produto
 include 'php_action/editar_produto.php'; // Inclui a função de editar produto
 include 'php_action/excluir_produto.php'; // Inclui a função de excluir produto
@@ -68,6 +67,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div style="flex: 1; margin-right: 20px;">
             <h1>Estoque</h1>
             <button class="add-button" onclick="showPopup()">Adicionar novo Produto</button>
+            <a href="dashboard.php" class="back-button">Voltar</a> <!-- Botão Voltar -->
 
             <form id="product-form">
                 <table>
@@ -135,96 +135,97 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <script>
-        function showPopup() {
-            document.getElementById('popup').style.display = 'flex';
-            document.getElementById('popup-title').innerText = 'Adicionar novo Produto';
-            document.getElementById('menu-form').reset(); // Limpa o formulário
-            document.getElementById('codProd').value = ''; // Reseta o codProd
-        }
+        // JavaScript permanece o mesmo
+    </script>
+</body>
+</html>
 
-        function hidePopup() {
-            document.getElementById('popup').style.display = 'none';
-        }
+<script>
+    function showPopup() {
+        document.getElementById('popup').style.display = 'flex';
+        document.getElementById('popup-title').innerText = 'Adicionar novo Produto';
+        document.getElementById('menu-form').reset(); // Limpa o formulário
+        document.getElementById('codProd').value = ''; // Reseta o codProd
+    }
 
-        function editProduct(codProd) {
-            // Faz uma requisição para buscar os dados do produto
-            fetch(`php_action/buscar_produto.php?codProd=${codProd}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data) {
-                        document.getElementById('name').value = data.nome;
-                        document.getElementById('description').value = data.descricao;
-                        document.getElementById('quantity').value = data.quantidade;
-                        document.getElementById('price').value = data.valor;
-                        document.getElementById('validade').value = data.validade;
-                        document.getElementById('codProd').value = codProd;
-                        document.getElementById('popup-title').innerText = 'Editar Produto';
-                        showPopup();
-                    } else {
-                        alert('Produto não encontrado.');
-                    }
-                })
-                .catch(error => console.error('Erro ao buscar produto:', error));
-        }
+    function hidePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
 
-        function deleteProduct(codProd) {
-            if (confirm("Tem certeza que deseja excluir este produto?")) {
-                const formData = new FormData();
-                formData.append('delete', true);
-                formData.append('codProd', codProd);
+    function editProduct(codProd) {
+        fetch(`php_action/buscar_produto.php?codProd=${codProd}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    document.getElementById('name').value = data.nome;
+                    document.getElementById('description').value = data.descricao;
+                    document.getElementById('quantity').value = data.quantidade;
+                    document.getElementById('price').value = data.valor;
+                    document.getElementById('validade').value = data.validade;
+                    document.getElementById('codProd').value = codProd;
+                    document.getElementById('popup-title').innerText = 'Editar Produto';
+                    showPopup();
+                } else {
+                    alert('Produto não encontrado.');
+                }
+            })
+            .catch(error => console.error('Erro ao buscar produto:', error));
+    }
 
-                fetch('php_action/excluir_produto.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.message) {
-                        alert(data.message);
-                        location.reload(); // Atualiza a página para refletir as mudanças
-                    } else if (data.error) {
-                        alert(data.error);
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro:', error);
-                });
-            }
-        }
-
-        document.getElementById('menu-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Evita o envio do formulário
-
-            // Obtém os valores dos campos do formulário
-            const name = document.getElementById('name').value;
-            const description = document.getElementById('description').value;
-            const price = document.getElementById('price').value;
-            const quantity = document.getElementById('quantity').value;
-            const validade = document.getElementById('validade').value;
-            const codProd = document.getElementById('codProd').value;
-
-            // Envia os dados para o PHP
+    function deleteProduct(codProd) {
+        if (confirm("Tem certeza que deseja excluir este produto?")) {
             const formData = new FormData();
-            formData.append('name', name);
-            formData.append('description', description);
-            formData.append('price', price);
-            formData.append('quantity', quantity);
-            formData.append('validade', validade);
+            formData.append('delete', true);
             formData.append('codProd', codProd);
 
-            fetch('estoque.php', {
+            fetch('php_action/excluir_produto.php', {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.text())
+            .then(response => response.json())
             .then(data => {
-                alert(data); // Mostra a mensagem de sucesso ou erro
-                location.reload(); // Atualiza a página
+                if (data.message) {
+                    alert(data.message);
+                    location.reload(); // Atualiza a página para refletir as mudanças
+                } else if (data.error) {
+                    alert(data.error);
+                }
             })
             .catch(error => {
                 console.error('Erro:', error);
             });
+        }
+    }
+
+    document.getElementById('menu-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Evita o envio do formulário
+
+        const name = document.getElementById('name').value;
+        const description = document.getElementById('description').value;
+        const price = document.getElementById('price').value;
+        const quantity = document.getElementById('quantity').value;
+        const validade = document.getElementById('validade').value;
+        const codProd = document.getElementById('codProd').value;
+
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('description', description);
+        formData.append('price', price);
+        formData.append('quantity', quantity);
+        formData.append('validade', validade);
+        formData.append('codProd', codProd);
+
+        fetch('estoque.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data); // Mostra a mensagem de sucesso ou erro
+            location.reload(); // Atualiza a página
+        })
+        .catch(error => {
+            console.error('Erro:', error);
         });
-    </script>
-</body>
-</html>
+    });
+</script>

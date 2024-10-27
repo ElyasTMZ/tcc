@@ -21,20 +21,6 @@ h1 {
     color: #333;
 }
 
-.add-button {
-    background-color: #c10a52;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-
-.add-button:hover {
-    background-color: #c10a52;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -107,5 +93,22 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
+    background-color: #a8093e; /* tom mais escuro para o hover */
+}
+.add-button, .back-button {
     background-color: #c10a52;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Allows margin and padding to work */
+    margin-bottom: 20px;
+    text-align: center; /* Centers text */
+    font-size: 16px; /* Ensures font size consistency */
+}
+
+.add-button:hover, .back-button:hover {
+    background-color: #a8093e; /* Slightly darker shade for hover effect */
 }

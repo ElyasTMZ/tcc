@@ -1,34 +1,21 @@
 <?php
 include_once 'php_action/db.php'; // Inclui a conexão com o banco de dados
-include_once 'php_action/FuncVendas.php'; // Inclui as funções de vendas
 
-// Busca todas as vendas com status 'pendente' ou 'Realizado'
-$stmt = $pdo->query("SELECT * FROM tbVendas WHERE status IN ('pendente', 'Realizado')");
+// Busca todas as vendas, incluindo canceladas e confirmadas
+$stmt = $pdo->query("SELECT * FROM tbVendas");
 $vendas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['confirmar'])) {
-        $codVenda = $_POST['codVenda'];
-        confirmarVenda($codVenda);
-        echo "<script>alert('Venda confirmada com sucesso!'); window.location.href='vendas.php';</script>";
-    } elseif (isset($_POST['cancelar'])) {
-        $codVenda = $_POST['codVenda'];
-        cancelarVenda($codVenda);
-        echo "<script>alert('Venda cancelada com sucesso!'); window.location.href='vendas.php';</script>";
-    }
-}
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
-    <title>Validar Vendas</title>
+    <title>Histórico de Vendas</title>
     <link rel="stylesheet" href="_css/vendas.css">
 </head>
 <body>
     <div class="content">
-        <h1>Confirmação de Vendas</h1>
+        <h1>Histórico de Vendas</h1>
 
         <table>
             <thead>
@@ -42,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <th>Valor Total</th>
                     <th>Método de Pagamento</th>
                     <th>Status</th>
-                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -84,30 +70,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </td>
                             <td><?php echo htmlspecialchars($venda['metodoPagamento']); ?></td>
                             <td><?php echo htmlspecialchars($venda['status']); ?></td>
-                            <td>
-                                <form method="post" style="display:inline;">
-                                    <input type="hidden" name="codVenda" value="<?php echo $venda['codVenda']; ?>">
-                                    <?php if ($venda['status'] === 'pendente' || $venda['status'] === 'Realizado'): ?>
-                                        <button type="submit" name="confirmar">Confirmar Venda</button>
-                                    <?php endif; ?>
-                                    <button type="submit" name="cancelar">Cancelar Venda</button>
-                                </form>
-                            </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="10">Nenhuma venda encontrada.</td>
+                        <td colspan="9">Nenhuma venda encontrada.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
         </table>
 
-        <!-- Botões Voltar e Histórico abaixo da tabela -->
-        <div class="button-group">
-            <a href="dashboard.php" class="back-button">Voltar</a> <!-- Botão Voltar -->
-            <a href="HistVendas.php" class="history-button">Ver Histórico</a> <!-- Botão Ver Histórico -->
-        </div>
+        <!-- Botão Voltar abaixo da tabela -->
+        <a href="dashboard.php" class="back-button">Voltar</a> <!-- Botão Voltar -->
     </div>
 </body>
 </html>
