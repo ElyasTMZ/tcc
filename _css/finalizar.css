@@ -68,5 +68,59 @@ strong {
     color: white; /* Muda a cor do texto para branco ao passar o mouse */
     text-decoration: none; /* Remove qualquer sublinhado */
 }
+/* _CSS/finalizar.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Fundo leve */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto; /* Centraliza a container */
+    padding: 20px;
+    background-color: #fff; /* Fundo branco para o conteúdo */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+h1 {
+    color: #c10a52; /* Cor do cabeçalho */
+    text-align: center;
+}
+
+.payment-info {
+    text-align: center; /* Centraliza o texto */
+    margin: 20px 0; /* Margem vertical */
+}
+
+.payment-info img {
+    width: 200px; /* Tamanho do QR Code */
+    height: auto; /* Mantém a proporção */
+    border: 1px solid #c10a52; /* Borda colorida */
+    border-radius: 8px; /* Bordas arredondadas */
+}
+
+.payment-info p {
+    font-size: 1.2em; /* Tamanho da fonte */
+    margin: 10px 0; /* Margem vertical */
+}
+
+a {
+    display: inline-block; /* Exibe como bloco */
+    margin: 20px 0; /* Margem vertical */
+    padding: 10px 20px; /* Espaçamento interno */
+    background-color: #c10a52; /* Cor de fundo do botão */
+    color: #fff; /* Cor do texto */
+    text-decoration: none; /* Remove sublinhado */
+    border-radius: 5px; /* Bordas arredondadas */
+    text-align: center; /* Centraliza o texto */
+}
+
+a:hover {
+    background-color: #a3073f; /* Cor de fundo ao passar o mouse */
+}
 
 

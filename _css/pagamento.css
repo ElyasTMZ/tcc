@@ -105,3 +105,30 @@ button.finalize-btn:hover {
 .finalize-btn:hover {
     background-color: #A5093F; /* Cor de fundo ao passar o mouse */
 }
+
+.popup-content .finalize-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    background-color: #c10a52;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.popup-content .finalize-btn:hover {
+    background-color: #a20845;
+}
+
+.popup-content .finalize-btn:last-child {
+    background-color: #ccc;
+    color: #333;
+}
+
+.popup-content .finalize-btn:last-child:hover {
+    background-color: #bbb;
+}
+

@@ -20,8 +20,7 @@ body {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(120, 120, 120, 0.3);
-    /* Adiciona um padding inferior para garantir que o conteúdo não sobreponha o rodapé */
-    padding-bottom: 150px; /* Deve ser igual à altura do rodapé */
+    padding-bottom: 150px; /* Espaço adicional para o rodapé */
 }
 
 /* Estilo do título */
@@ -56,13 +55,8 @@ tr:hover {
     background-color: #ddd;
 }
 
-/* Estilo dos formulários */
-form {
-    text-align: center;
-}
-
 /* Estilo dos botões */
-button {
+button, .btn {
     color: #fff;
     border: none;
     font-size: 1em;
@@ -70,21 +64,50 @@ button {
     background-color: #c10a52;
     cursor: pointer;
     border-radius: 5px;
+    text-decoration: none; /* Remove o sublinhado */
+    font-weight: bold;
+    transition: background-color 0.3s; /* Efeito de transição */
+    display: inline-block; /* Ajuste para alinhamento */
 }
 
-button:hover {
-    background-color: #a10a47; /* Variação mais escura da cor principal para o efeito hover */
+button:hover, .btn:hover {
+    background-color: #a10a47; /* Cor para hover */
 }
 
 /* Estilo dos links */
 a {
     color: #c10a52;
     text-decoration: none;
-    display: inline-block; /* Ajuste para não ocupar toda a largura */
+    display: inline-block;
     text-align: center;
     margin-top: 20px;
 }
 
 a:hover {
     text-decoration: underline;
+}
+
+/* Estilo do formulário */
+form {
+    text-align: center;
+}
+
+/* Estilo do total do carrinho */
+.cart-total {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 20px;
+}
+
+/* Mensagem de carrinho vazio */
+.empty-cart-message {
+    text-align: center;
+    font-size: 1.1em;
+    color: #777;
+}
+
+/* Botão para finalizar a compra e voltar ao cardápio */
+.checkout-button, .return-button {
+    margin-top: 20px;
 }

@@ -150,7 +150,6 @@ if (isset($_SESSION['codUsu'])) {
             <img src="<?= htmlspecialchars($usuario['foto']) ?>" alt="Foto do usuário" style="max-width: 200px;">
         <?php endif; ?>
     </div>
-    
 </body>
 </html>
 <?php include 'footer.php'; ?>

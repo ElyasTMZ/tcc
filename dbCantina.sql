@@ -39,7 +39,7 @@ CREATE TABLE tbProdutos (
     PRIMARY KEY (codProd)
 );
 
--- Cria a tabela de vendas
+-- Cria a tabela de vendas com o campo metodoPagamento
 CREATE TABLE tbVendas (
     codVenda INT NOT NULL AUTO_INCREMENT,
     dataVenda DATE,
@@ -47,6 +47,7 @@ CREATE TABLE tbVendas (
     quantidade INT,
     codUsu INT NOT NULL,
     codProd INT NOT NULL,
+    metodoPagamento VARCHAR(20), -- Campo para armazenar o método de pagamento
     status VARCHAR(20) DEFAULT 'pendente', -- Adicionado campo status
     PRIMARY KEY (codVenda),
     FOREIGN KEY (codUsu) REFERENCES tbUsuarios(codUsu),

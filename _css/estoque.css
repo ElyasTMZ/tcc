@@ -1,127 +1,111 @@
-body.estoque-page {
-    margin: 0;
-    padding: 0;
+body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-header {
-    width: 100%;
-    height: 120px;
-    background-color: #C10A52;
-    display: flex;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-}
-
-
-.menu {
-    position: absolute;
-    left: 25%;
-    display: flex;
-    align-items: center;
-}
-
-.menu a {
-    margin-inline-start: 80px;
-    text-decoration: none;
-    color: #ffffff;
-    font-size: 20px;
-}
-
-.menu a:hover {
-    text-decoration: underline;
+    margin: 0;
+    padding: 20px;
 }
 
 .content {
-    margin-top: 120px; /* Altura do cabeçalho */
-    margin-bottom: 60px; /* Altura do rodapé */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: auto;
+    background: #fff;
     padding: 20px;
-    background-color: #fff; /* Cor de fundo do conteúdo */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Opcional: sombra para destacar o conteúdo */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #333;
 }
 
 .add-button {
+    background-color: #c10a52;
+    color: white;
     padding: 10px 20px;
-    font-size: 16px;
-    background-color: #3498db;
-    color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin: 50px 0;
+    margin-bottom: 20px;
 }
 
 .add-button:hover {
-    background-color: #2980b9;
+    background-color: #c10a52;
 }
 
-/* Estilos para o popup */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
 .popup {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
-    z-index: 1000;
 }
 
 .popup-content {
-    background: #fff;
-    border-radius: 8px;
+    background: white;
     padding: 20px;
-    width: 300px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.popup-content input, .popup-content textarea {
-    width: 95%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
     border-radius: 5px;
-}
-
-.popup-content textarea {
-    resize: vertical;
-}
-
-.popup-content button {
-    padding: 10px;
-    font-size: 16px;
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.popup-content button:hover {
-    background-color: #2980b9;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    min-width: 300px;
 }
 
 .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #e74c3c;
-    color: #fff;
+    background: none;
     border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-size: 20px;
     cursor: pointer;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin: 10px 0 5px;
+}
+
+input, textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+button[type="submit"] {
+    background-color: #c10a52;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #c10a52;
 }

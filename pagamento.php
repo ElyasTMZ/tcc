@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+include_once 'php_action/db.php';
+include 'php_action/cartfunc.php'; 
+include 'php_action/FuncPagamento.php';
+
 // Verifica se o usuário está logado
 if (!isset($_SESSION['email'])) {
     header('Location: /Tcc/login.php'); // Redireciona para a página de login
@@ -13,36 +17,56 @@ if (empty($_SESSION['cart'])) {
     exit();
 }
 
-// Exemplo de itens do carrinho (em uma aplicação real, você buscaria do banco de dados)
-$itens = $_SESSION['cart']; // Assume que o carrinho está salvo na sessão
+// Itens do carrinho
+$itens = $_SESSION['cart'];
 
-// Calcula o total
-$total = array_sum(array_column($itens, 'price'));
-
-// Variáveis para armazenar informações do pagamento
-$metodoPagamento = '';
-$codigoPedido = uniqid('pedido_');
-$statusPagamento = 'Pendente';
+// Calcula o total considerando a quantidade de cada item
+$total = 0;
+foreach ($itens as $item) {
+    $total += $item['price'] * $item['quantity'];
+}
 
 // Verifica se o formulário foi enviado
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Depuração: Mostra os dados enviados
-    var_dump($_POST); // Remova isso em produção, é só para debug
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Captura o método de pagamento selecionado
-    $metodoPagamento = $_POST['payment'] ?? ''; // Captura o valor ou um vazio
+    $metodoPagamento = $_POST['payment'] ?? '';
 
-    // Define o status de pagamento com base no método escolhido
-    $statusPagamento = ($metodoPagamento === 'pix') ? 'Realizado' : 'Pendente';
+    // Verifica se um método de pagamento foi selecionado
+    if (!empty($metodoPagamento)) {
+        // Define o ID do usuário a partir da sessão
+        $codUsu = $_SESSION['codUsu'];
 
-    // Armazena as informações na sessão para uso posterior
-    $_SESSION['codigoPedido'] = $codigoPedido;
-    $_SESSION['metodoPagamento'] = $metodoPagamento;
-    $_SESSION['statusPagamento'] = $statusPagamento;
+        // Processa o pagamento
+        if ($metodoPagamento === 'dinheiro') {
+            // Gera um código de pedido único
+            $codigoPedido = uniqid('pedido_');
 
-    // Aqui você pode adicionar qualquer lógica adicional necessária, como salvar o pedido no banco de dados.
-} else {
-    echo "Não foi uma requisição POST.";
+            // Salva o método de pagamento na sessão
+            $_SESSION['metodoPagamento'] = $metodoPagamento;
+
+            // Finaliza a compra e registra a venda
+            $resultado = finalizarCompra($codUsu); // Usando a função que você já implementou
+
+            // Verifica se a compra foi finalizada com sucesso
+            if (!empty($resultado['mensagemSucesso'])) {
+                // Redireciona para a página de finalização com o código da venda retornado
+                header('Location: finalizar.php?codVenda=' . $resultado['ultimoIdPedido']); // Usa o ID da venda
+                exit();
+            } else {
+                $erro = $resultado['mensagemErro'] ?: "Erro ao processar seu pedido. Tente novamente.";
+            }
+        } elseif ($metodoPagamento === 'pix') {
+            // Salva o método de pagamento e valor total na sessão
+            $_SESSION['metodoPagamento'] = $metodoPagamento;
+            $_SESSION['valorTotal'] = $total; // Salva o valor total
+
+            // Redireciona para a página de pagamento via PIX
+            header('Location: pagpix.php'); // Página onde o pagamento será finalizado
+            exit();
+        }
+    } else {
+        $erro = "Selecione um método de pagamento.";
+    }
 }
 ?>
 
@@ -57,16 +81,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="container">
         <h1>Resumo de Pagamento</h1>
+        <?php if (isset($erro)): ?>
+            <p class="error"><?php echo htmlspecialchars($erro); ?></p>
+        <?php endif; ?>
         <div class="order-summary">
             <h2>Itens</h2>
             <?php foreach ($itens as $item): ?>
-                <p><?php echo htmlspecialchars($item['name']); ?>: <span class="price">R$ <?php echo number_format($item['price'], 2, ',', '.'); ?></span></p>
+                <p><?php echo htmlspecialchars($item['name']); ?> (x<?php echo $item['quantity']; ?>): <span class="price">R$ <?php echo number_format($item['price'] * $item['quantity'], 2, ',', '.'); ?></span></p>
             <?php endforeach; ?>
             <hr>
             <p class="total">Total: <span class="price">R$ <?php echo number_format($total, 2, ',', '.'); ?></span></p>
         </div>
         
-        <form method="post" action="pagamento.php">
+        <form method="post" action="">
             <div class="payment-methods">
                 <h2>Formas de Pagamento</h2>
                 <label>
@@ -79,18 +106,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             <button type="submit" class="finalize-btn">Finalizar</button>
         </form>
-
-        <?php if (!empty($metodoPagamento)): ?>
-            <div class="payment-confirmation">
-                <h2>Confirmação do Pagamento</h2>
-                <p>Método de Pagamento: <strong><?php echo htmlspecialchars($metodoPagamento); ?></strong></p>
-                <p>Código do Pedido: <strong><?php echo htmlspecialchars($codigoPedido); ?></strong></p>
-                <p>Status do Pagamento: <strong><?php echo htmlspecialchars($statusPagamento); ?></strong></p>
-                <hr>
-                <p><a href="finalizar.php">Confirmar e Finalizar</a></p>
-            </div>
-        <?php endif; ?>
     </div>
 </body>
 </html>
-<?php include 'footer.php'; ?>
