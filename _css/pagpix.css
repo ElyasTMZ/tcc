@@ -1,0 +1,103 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    background-color: #ffffff;
+    font-family: 'Raleway', sans-serif;
+    display: flex;
+    flex-direction: column;
+    padding-top: 120px;
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 30px rgba(120, 120, 120, 0.3);
+    text-align: center;
+    margin: auto;
+}
+
+h1 {
+    color: #ff0066;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.payment-info {
+    margin: 20px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.payment-info p {
+    margin-bottom: 10px;
+}
+
+strong {
+    color: #ff0066;
+}
+
+.finalize-btn {
+    background-color: #ff0066;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.finalize-btn:hover {
+    background-color: #e6005c;
+}
+
+a {
+    color: #006CB5;
+    text-decoration: none;
+    
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #ff0066;
+}
+
+#qrcode {
+    margin: 20px 0;
+}
+
+footer {
+    background-color: #c10a52;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    margin-top: auto;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: #ff0066;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+}

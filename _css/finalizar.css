@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #aaa; /* Cor de fundo geral */
+    font-family: 'Raleway', sans-serif; /* Fonte principal */
+    display: flex;
+    flex-direction: column; /* Permite que o conteúdo se ajuste na vertical */
+}
+
+body {
+    padding-top: 120px; /* Espaço para o cabeçalho fixo */
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    padding: 30px;
+    background-color: #fff; /* Fundo branco para a área do conteúdo */
+    border-radius: 12px;
+    box-shadow: 0 5px 30px rgba(120, 120, 120, 0.3);
+    text-align: center; /* Centraliza o texto dentro da div */
+    margin: auto; /* Garante que a div fique centralizada */
+}
+
+h1 {
+    color: #ff0066; /* Cor do título */
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.success, .error {
+    margin: 10px 0;
+    font-size: 18px; /* Tamanho da fonte para mensagens */
+}
+
+.success {
+    color: #28a745; /* Verde para mensagens de sucesso */
+}
+
+.error {
+    color: #dc3545; /* Vermelho para mensagens de erro */
+}
+
+strong {
+    color: #ff0066; /* Cor do texto forte */
+}
+
+.back-button {
+    color: #006CB5; /* Cor do texto */
+    background-color: transparent; /* Fundo transparente */
+    border: 2px solid #ff0066; /* Contorno rosa */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 10px 20px; /* Espaçamento interno do botão */
+    font-weight: bold; /* Peso da fonte */
+    cursor: pointer; /* Muda o cursor ao passar sobre o botão */
+    transition: background-color 0.3s, color 0.3s; /* Transições suaves */
+}
+
+.back-button:hover {
+    background-color: #ff0066; /* Cor ao passar o mouse */
+    color: white; /* Muda a cor do texto para branco */
+    text-decoration: none; /* Remove sublinhado */
+}
+
+/* Estilos do rodapé */
+footer {
+    background-color: #c10a52; /* Cor do rodapé */
+    color: white;
+    padding: 10px;
+    text-align: center;
+    margin-top: auto; /* Empurra o rodapé para baixo */
+}
+
+footer a {
+    color: white; /* Cor do texto no rodapé */
+    text-decoration: none; /* Remove sublinhado */
+    transition: color 0.3s; /* Transição suave para a cor */
+}
+
+footer a:hover {
+    color: #ff0066; /* Muda a cor ao passar o mouse */
+}
+
+/* Imagens dentro do container */
+img {
+    max-width: 100%; /* Garante que a imagem não ultrapasse a largura */
+    height: auto; /* Mantém a proporção da imagem */
+    border-radius: 8px; /* Bordas arredondadas para a imagem */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 22px; /* Ajusta o tamanho do título em telas menores */
+    }
+}

@@ -1,0 +1,124 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #aaa;
+    font-family: 'Raleway', sans-serif;
+}
+
+/* Ajusta o padding superior para evitar sobreposição com o cabeçalho fixo */
+body {
+    padding-top: 120px; /* Ajuste conforme a altura do cabeçalho */
+}
+
+/* Estilo da container */
+.container {
+    width: 95%;
+    max-width: 600px;
+    margin: 200px auto; /* Centraliza horizontalmente */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(120, 120, 120, 0.3);
+    padding-bottom: 150px; /* Espaço adicional para o rodapé */
+}
+
+/* Estilo do título */
+h1 {
+    text-align: center;
+    color: #c10a52;
+}
+
+/* Estilo da tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 1px;
+    text-align:center;
+}
+
+th {
+    background-color: #c10a52;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+/* Estilo dos botões */
+button, .btn {
+    color: #fff;
+    border: none;
+    font-size: 1em;
+    padding: 10px 20px;
+    background-color: #c10a52;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none; /* Remove o sublinhado */
+    font-weight: bold;
+    transition: background-color 0.3s; /* Efeito de transição */
+    display: inline-block; /* Ajuste para alinhamento */
+}
+
+button:hover, .btn:hover {
+    background-color: #a10a47; /* Cor para hover */
+}
+
+/* Estilo dos links */
+a {
+    color: #c10a52;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo do formulário */
+form {
+    text-align: center;
+}
+
+/* Estilo do total do carrinho */
+.cart-total {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 20px;
+}
+
+/* Mensagem de carrinho vazio */
+.empty-cart-message {
+    text-align: center;
+    font-size: 1.1em;
+    color: #777;
+}
+
+/* Botão para finalizar a compra e voltar ao cardápio */
+.botoes{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Espaçamento entre os botões */
+    margin-top: 20px;
+}
+.return-button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Espaçamento entre os botões */
+    margin-top: 20px;
+
+}

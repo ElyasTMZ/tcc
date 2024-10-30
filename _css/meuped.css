@@ -1,0 +1,117 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding-top: 120px; /* Espaçamento igual à altura do cabeçalho */
+    padding-bottom: 20px; /* Espaçamento abaixo do conteúdo */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Garante que o body ocupe toda a altura da tela */
+}
+
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px; /* Largura máxima para melhor visualização */
+    margin: 0 auto; /* Centraliza o container na tela */
+}
+
+h1 {
+    color: #c10a52;
+    font-size: 28px; 
+    margin-bottom: 20px; 
+}
+
+h2 {
+    color: #c10a52;
+    font-size: 22px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #c10a52; 
+}
+
+.pedido-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    flex-wrap: wrap; /* Permite que os pedidos se movam para a próxima linha em telas menores */
+}
+
+.pedido-list {
+    width: 48%; /* Cada lista ocupa cerca de 48% da largura */
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left; 
+    margin-bottom: 20px; /* Espaçamento entre as listas */
+}
+
+ul {
+    list-style-type: none; 
+    padding: 0;
+    margin: 20px 0; 
+}
+
+li {
+    font-size: 16px;
+    color: #333;
+    margin: 10px 0; 
+}
+
+button {
+    background-color: #c10a52;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    width: 100%; 
+}
+
+button:hover {
+    background-color: #a00e4d; 
+}
+
+/* Media Query para telas menores que 600px */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 24px; 
+    }
+
+    h2 {
+        font-size: 20px; 
+    }
+
+    .pedido-container {
+        flex-direction: column; /* Muda a direção para coluna em telas pequenas */
+    }
+
+    .pedido-list {
+        width: 100%; /* Lista ocupa 100% da largura em telas pequenas */
+        margin-bottom: 20px; /* Espaço entre as listas */
+    }
+
+    button {
+        font-size: 14px; 
+    }
+}
+
+/* Rodapé */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 100%; 
+    margin-top: auto; 
+}

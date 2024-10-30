@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    margin-top: 75px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%; /* Altera para 90% para ser responsivo */
+    max-width: 400px; /* Define um máximo */
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.order-summary, .payment-methods {
+    margin-bottom: 20px;
+}
+
+.price {
+    float: right;
+    font-weight: bold;
+}
+
+.total {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+hr {
+    margin: 10px 0;
+}
+
+.payment-methods label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+button.finalize-btn {
+    padding: 10px 20px;
+    background-color: #c10a52;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 50%; /* Para que o botão ocupe 100% da largura */
+}
+
+button.finalize-btn:hover {
+    background-color: #c10a52;
+}
+
+/* Media Query para telas menores */
+@media (max-width: 480px) {
+    .container {
+        padding: 15px; /* Ajusta o padding para telas menores */
+    }
+
+    h1 {
+        font-size: 24px; /* Ajusta o tamanho da fonte do título */
+    }
+
+    .price {
+        font-size: 14px; /* Ajusta o tamanho da fonte do preço */
+    }
+
+    .total {
+        font-size: 16px; /* Ajusta o tamanho da fonte total */
+    }
+
+    button.finalize-btn {
+        padding: 8px; /* Ajusta o padding do botão */
+    }
+}
+.finalize-btn {
+    background-color: #C10A52; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    border: none; /* Sem borda */
+    padding: 10px 20px; /* Espaçamento interno */
+    text-align: center; /* Centraliza o texto */
+    text-decoration: none; /* Remove sublinhado */
+    display: inline-block; /* Permite definir largura e altura */
+    font-size: 16px; /* Tamanho da fonte */
+    margin: 4px 2px; /* Margens */
+    cursor: pointer; /* Cursor de ponteiro */
+    border-radius: 5px; /* Bordas arredondadas */
+}
+
+.finalize-btn:hover {
+    background-color: #A5093F; /* Cor de fundo ao passar o mouse */
+}
+
+.popup-content .finalize-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    background-color: #c10a52;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.popup-content .finalize-btn:hover {
+    background-color: #a20845;
+}
+
+.popup-content .finalize-btn:last-child {
+    background-color: #ccc;
+    color: #333;
+}
+
+.popup-content .finalize-btn:last-child:hover {
+    background-color: #bbb;
+}
+

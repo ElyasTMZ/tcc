@@ -1,0 +1,53 @@
+/* Ajustes gerais para o cardápio */
+.cardapio-container {
+    margin-top: 140px; /* Ajuste a margem superior para garantir que o conteúdo não fique sobreposto pelo cabeçalho */
+}
+
+/* Container dos itens do cardápio */
+.cardapio-content {
+    display: flex;
+    flex-direction: column; /* Organiza os itens verticalmente */
+    align-items: flex-start; /* Alinha os itens à esquerda */
+    width: 80%; /* Ajuste conforme necessário */
+    max-width: 800px; /* Largura máxima dos itens */
+    /* Remove a centralização automática e ajusta a margem para alinhar à esquerda */
+    margin: 0; /* Remove qualquer margem automática */
+    padding: 0 20px; /* Adiciona algum padding lateral, se necessário */
+}
+
+/* Estilo dos itens do cardápio */
+.cardapio-item {
+    background-color: #f9f9f9; /* Cor de fundo dos itens */
+    border: 1px solid #ddd; /* Borda dos itens */
+    border-radius: 5px;
+    margin-bottom: 10px; /* Espaçamento entre os itens */
+    padding: 10px;
+    width: 100%; /* Faz com que o item ocupe toda a largura do container */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve para destacar os itens */
+}
+
+/* Estilo dos cabeçalhos dos itens */
+.cardapio-item h3 {
+    margin: 0 0 10px 0;
+}
+
+/* Estilo dos parágrafos dentro dos itens */
+.cardapio-item p {
+    margin: 0;
+}
+
+/* Ajuste dos botões */
+.cardapio-item button {
+    background-color: #C10A52; /* Cor de fundo dos botões */
+    color: #fff; /* Cor do texto dos botões */
+    border: none;
+    padding: 8px 15px; /* Ajuste o tamanho do botão */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Estilo dos botões ao passar o mouse */
+.cardapio-item button:hover {
+    background-color: #a1084d; /* Cor do botão ao passar o mouse */
+}
